@@ -16,9 +16,8 @@
 
 ## Technologies Used
 - Python (Flask)
-- HTML / CSS
-- Jinja2 (Templating engine)
-- SQLite (Database)
+- HTML
+- CSS
 
 ---
 
