@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>Expense Tracker</h1>
+
+<form action="/add" method="post">
+    <input type="number" name="amount" placeholder="Amount" required>
+    <input type="text" name="category" placeholder="Category" required>
+    <button type="submit">Add Expense</button>
+</form>
+
+<!-- DOWNLOAD CSV BUTTON -->
+<a href="/export">
+    <button type="button">Download CSV</button>
+</a>
+
+<h2>Total Spent: ₹ {{ total }}</h2>
+
+
+<!-- ✅ BUDGET ALERT -->
+{% if budget_alert %}
+<h3 style="color: red;">
+    ⚠️ Budget Alert! You have exceeded your monthly budget of ₹ {{ budget }}
+</h3>
+{% endif %}
+
+<!-- EXPENSE TABLE -->
+<table>
+    <tr>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+
+    {% for expense in expenses %}
+    <tr>
+        <td>{{ expense[1] }}</td>
+        <td>{{ expense[2] }}</td>
+        <td>{{ expense[3] }}</td>
+        <td>
+            <a href="/delete/{{ expense[0] }}" style="color: red;">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<!-- CATEGORY SUMMARY -->
+<h2>Category-wise Summary</h2>
+<table>
+    <tr>
+        <th>Category</th>
+        <th>Total Spent</th>
+    </tr>
+
+    {% for category, amount in category_summary.items() %}
+    <tr>
+        <td>{{ category }}</td>
+        <td>₹ {{ amount }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- MONTHLY REPORT -->
+<h2>Monthly Report</h2>
+<table>
+    <tr>
+        <th>Month</th>
+        <th>Total Spent</th>
+    </tr>
+
+    {% for month, amount in monthly_summary.items() %}
+    <tr>
+        <td>{{ month }}</td>
+        <td>₹ {{ amount }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
